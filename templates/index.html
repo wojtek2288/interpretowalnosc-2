@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generator Podpisów do Zdjęć</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin: auto;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50; /* Green background */
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049; /* Darker green */
+        }
+        .image-preview {
+            margin-top: 20px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .description {
+            background: #e9e9e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: inline-block;
+            text-align: left;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generator Podpisów do Zdjęć</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="image" id="image" required onchange="previewImage();">
+        <input type="submit" value="Generuj Opis">
+    </form>
+    <div class="image-preview" id="imagePreview">
+        <img src="" alt="Podgląd obrazu" style="display: none;" id="imageDisplay">
+    </div>
+    {% if description %}
+        <div class="description">
+            <h2>Opis Obrazu:</h2>
+            <p>{{ description }}</p>
+        </div>
+    {% endif %}
+    <script>
+        function previewImage() {
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(document.getElementById("image").files[0]);
+
+            oFReader.onload = function (oFREvent) {
+                document.getElementById("imageDisplay").style.display = "block";
+                document.getElementById("imageDisplay").src = oFREvent.target.result;
+            };
+        }
+    </script>
+</body>
+</html>
